@@ -1,44 +1,54 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { LotteryResultsBody, TicketBody, TypedNumbers } from '../models/models';
+import { Client} from '../models/models';
 
-let ticket = <TicketBody>{};
-let lotteryResults = <LotteryResultsBody>{};
+ let ticket = {} as Client;
+// let listOfClients =
 
 export const useApi = () => {
     const navigate = useNavigate();
     const [postRequestError, setPostRequestError] = useState(false);
     const [getRequestError, setGetRequestError] = useState(false);
+   // const [ticket, setTicket] = useState<Client>({} as Client);
+    const [listOfClients, setListOfClients] = useState<Client[]>([]); // React state for the client list
 
-    const sendNumbers = async (numbers: TypedNumbers) => {
+    const sendClient = async (client: Client) => {
         try {
-            const response = await axios.post('/api/inputNumbers', numbers);
+            const response = await axios.post('/api/add/client', client);
             ticket = response.data;
-            navigate('/ticket');
+            setPostRequestError(false);
+            //navigate('/ticket');
         } catch (error) {
             if (error) setPostRequestError(true);
             else setPostRequestError(false);
         }
     };
 
-    const getResults = async (ticketId: string) => {
+    const getClients = async () => {
         try {
-            const response = await axios.get(`/api/results/${ticketId}`);
-            lotteryResults = response.data;
-            navigate('/checkResults/results');
+            const response = await axios.get(`/api/clients`);
+            setListOfClients(response.data);
+            setGetRequestError(false);
+            //navigate('/checkResults/results');
         } catch (error) {
             if (error) setGetRequestError(true);
             else setGetRequestError(false);
         }
     };
+
+    // Fetch the client list when the component loads
+    useEffect(() => {
+        getClients();
+    }, []);
+
     return {
-        sendNumbers,
-        getResults,
+        sendClient,
+        getClients,
         postRequestError,
         getRequestError,
         ticket,
-        lotteryResults,
+        listOfClients
     };
 };
