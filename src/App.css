@@ -36,3 +36,210 @@
     transform: rotate(360deg);
   }
 }
+
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background:
+          linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), /* Transparency layer */
+          url('best-quality-city-skyline-zv5l6ax3kens9gzd.jpg') no-repeat center center, /* Background image */
+          #87CEEB; /* Light blue background color underneath */
+  background-size: cover; /* Ensures the image covers the entire viewport */
+  background-attachment: fixed; /* Ensures the background stays in place while scrolling */
+}
+
+/*body{*/
+/*    !*background-color: lightblue;*!*/
+/*    !*color: black;*!*/
+/*    !*display: flex;*!*/
+/*    !*justify-content: center;*!*/
+/*    align-items: center;*/
+/*    !*background-size: auto 100%; !* Adjusts image height to fit the viewport *!*!*/
+/*    !*height: 100%;*!*/
+/*    background:*/
+/*            linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), !* Transparency layer *!*/
+/*            url('best-quality-city-skyline-zv5l6ax3kens9gzd.jpg') no-repeat center center, !* Background image *!*/
+/*            #333;*/
+/*    background-size: cover; !* Ensures the image covers the entire background *!*/
+/*    height: 100%;*/
+/*    background-attachment: fixed;*/
+/*}*/
+
+.formularz{
+  color: saddlebrown;
+  margin: 50px auto;
+  max-width: 400px;
+  background: #abe1ff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #444;
+}
+
+input {
+  width: 75%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+button {
+  width: 50%;
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover {
+  background-color: lightskyblue;
+}
+
+.menu {
+  background-color: #c4dcf8;
+  color: black;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.menu ul {
+  list-style: none;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.menu li {
+  margin: 0 10px;
+}
+
+.menu a {
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.lista_klientów{
+  max-width: 800px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  /*border-collapse: collapse;*/
+}
+
+th, td {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #4a9ff1;
+  color: white;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+.lista_pojazdów{
+  max-width: 800px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lista_mechaników{
+  max-width: 800px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lista_napraw{
+  max-width: 1000px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.delete-button{
+  background-color: #e64b4b;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.delete-button:hover{
+  background-color: #f61414;
+}
+
+.read-more{
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.read-more:hover {
+  background-color: #0e5db1;
+}
+
+.details {
+  color: green;
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+.contact {
+  /*background-color: #333; !* Dark background *!*/
+  background-color: #333333; /* Dark background */
+  color: white; /* White text */
+  text-align: center; /* Center the text */
+  padding: 20px 0; /* Padding for top and bottom */
+  position: fixed; /* Fix the div to the bottom of the page */
+  bottom: 0; /* Align to the bottom */
+  width: 100%; /* Full width */
+  font-size: 1.1em; /* Slightly larger font */
+}
