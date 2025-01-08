@@ -14,7 +14,7 @@ export interface Client {
     email: string;
 }
 
-export interface Car {
+export interface Vehicle {
     vehicleRegistration: string;
     mark: string;
     model: string;
@@ -23,18 +23,22 @@ export interface Car {
 }
 
 export interface Mechanic {
-    vehicleRegistration: string;
-    mark: string;
-    ifEmployed: boolean;
-    login: string;
+    id: string;
+    firstName: string;
+    secondName: boolean;
+    ifEmployed: string;
+    username: string;
     password: string
 }
 
 export interface Repair {
-    startDate: Date;
-    endDate: Date;
+    repairId: string
+    mechanic: Mechanic;
+    startDate: string;
+    endDate: string;
     state: string;
     description: string;
     repairProtocol: string;
+    phoneNumber: string;
 
 }
