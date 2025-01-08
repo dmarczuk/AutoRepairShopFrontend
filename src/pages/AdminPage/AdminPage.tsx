@@ -5,7 +5,7 @@ const AdminPage: React.FC = () => {
         <>
             <nav className="menu">
                 <ul>
-                    <li><a href="/HomePage">Strona główna</a></li>
+                    <li><a href="/">Strona główna</a></li>
                     <li><a href="/AddTicket">Dodaj zgłoszenie</a></li>
                     <li><a href="/Repairs">Naprawy</a></li>
                     <li><a href="/Clients">Klienci</a></li>

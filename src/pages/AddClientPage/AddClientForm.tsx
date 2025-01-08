@@ -46,6 +46,7 @@ const AddClientForm: React.FC = () => {
                     <input type="email" name="email" value={client.email} onChange={handleChange} />
                 </label>
                 <button type="submit">Add Client</button>
+                {/*<Button type="submit" onClick={() => sendNumbers({ inputNumbers: inputs })}*/}
             </form>
             {postRequestError && <p>Error submitting client. Please try again.</p>}
         </div>

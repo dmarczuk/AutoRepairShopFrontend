@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import AddTicket from "./pages/AddTicketPage/AddTicket";
 import Clients from "./pages/ListOfClientsPage/Clients";
-import {useApi} from "./composables/useApi";
+// import {useApi} from "./composables/useApi";
 import MechanicPage from "./pages/MechanicPage/MechanicPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import HomePage from "./pages/HomePage";
