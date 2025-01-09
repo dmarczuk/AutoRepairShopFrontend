@@ -42,3 +42,10 @@ export interface Repair {
     phoneNumber: string;
 
 }
+
+export const formatDate = (dateString: string | null | undefined): string => {
+    if (!dateString) {
+        return ""; // Return an empty string if the input is null or undefined
+    }
+    return dateString.slice(0, 10); // Extract YYYY-MM-DD
+};

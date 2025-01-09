@@ -62,10 +62,11 @@ const Vehicles: React.FC = () => {
                         <tbody>
                         {listOfVehicles.map((vehicle) => (
                             <tr key={vehicle.vin}>
+                                <td>{vehicle.vin}</td>
                                 <td>{vehicle.vehicleRegistration}</td>
                                 <td>{vehicle.mark}</td>
                                 <td>{vehicle.model}</td>
-                                <td>{vehicle.productionYear}</td>
+                                <td>{Number(vehicle.productionYear)}</td>
                             </tr>
                         ))}
                         </tbody>

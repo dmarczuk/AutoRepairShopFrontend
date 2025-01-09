@@ -6,13 +6,15 @@ const HomePage: React.FC = () => {
         <>
             <nav className="menu">
                 <ul>
-                    <li><a href="/HomePage">Strona główna</a></li>
+                    <li><a href="/">Strona główna</a></li>
                     <li><a href="/AddTicket">Dodaj zgłoszenie</a></li>
                     <li><a href="/MechanicPage">Strona mechanika</a></li>
                 </ul>
             </nav>
-            <div>
+            <div className="main">
                 <h2>Strona Główna</h2>
+                <h2>Warsztat samochodowy. Zapraszamy!</h2>
+                <p>W zakładce Dodaj zgłoszenie możesz wysłać swoje zgłoszenie</p>
             </div>
         </>
 

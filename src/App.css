@@ -49,7 +49,7 @@ body, html {
 
 body {
   background:
-          linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), /* Transparency layer */
+          linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), /* Transparency layer */
           url('best-quality-city-skyline-zv5l6ax3kens9gzd.jpg') no-repeat center center, /* Background image */
           #87CEEB; /* Light blue background color underneath */
   background-size: cover; /* Ensures the image covers the entire viewport */
@@ -242,4 +242,15 @@ tr:hover {
   bottom: 0; /* Align to the bottom */
   width: 100%; /* Full width */
   font-size: 1.1em; /* Slightly larger font */
+}
+
+.main {
+  max-width: 800px;
+  text-align: center;
+  margin: 50px auto;
+  background: #cfc3c3;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
 }

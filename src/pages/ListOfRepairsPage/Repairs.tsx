@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useApi} from "../../composables/useApi";
-import {Repair, Vehicle} from "../../models/models";
+// import {useApi} from "../../composables/useApi";
+import {formatDate, Repair} from "../../models/models";
 import axios from "../../axiosConfig";
 
 const Repairs: React.FC = () => {
@@ -72,8 +72,8 @@ const Repairs: React.FC = () => {
                                 <td>{repair.repairProtocol}</td>
                                 <td>{repair.state}</td>
                                 <td>{repair.description}</td>
-                                <td>{repair.startDate}</td>
-                                <td>{repair.endDate}</td>
+                                <td>{formatDate(repair.startDate)}</td>
+                                <td>{formatDate(repair.endDate)}</td>
                             </tr>
                         ))}
                         </tbody>
