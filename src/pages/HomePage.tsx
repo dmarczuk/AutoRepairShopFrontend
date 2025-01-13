@@ -1,16 +1,11 @@
 import React from "react";
+import {Menu} from "../components/Menu";
 
 const HomePage: React.FC = () => {
 
     return (
         <>
-            <nav className="menu">
-                <ul>
-                    <li><a href="/">Strona główna</a></li>
-                    <li><a href="/AddTicket">Dodaj zgłoszenie</a></li>
-                    <li><a href="/MechanicPage">Strona mechanika</a></li>
-                </ul>
-            </nav>
+            <Menu></Menu>
             <div className="main">
                 <h2>Strona Główna</h2>
                 <h2>Warsztat samochodowy. Zapraszamy!</h2>

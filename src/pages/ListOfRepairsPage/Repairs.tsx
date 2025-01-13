@@ -1,12 +1,26 @@
 import React, {useEffect, useState} from 'react';
 // import {useApi} from "../../composables/useApi";
-import {formatDate, Repair} from "../../models/models";
-import axios from "../../axiosConfig";
+import {formatDate, formatUsername, Repair} from "../../models/models";
+import axios from "../../services/axiosConfig";
+import {Menu} from "../../components/Menu";
 
 const Repairs: React.FC = () => {
     const [getRequestError, setGetRequestError] = useState(false);
     const [listOfRepairs, setListOfRepairs] = useState<Repair[]>([]); // React state for the client list
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    useEffect(() => {
+        // Check if the user is logged in by looking for a token in localStorage
+        const token = localStorage.getItem('token');
+        setIsLoggedIn(!!token); // Convert token existence to a boolean
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('roles');
+        setIsLoggedIn(false); // Update state to reflect logout
+        window.location.href = '/'; // Redirect to the login page
+    };
 
     const getRepairs = async () => {
         try {
@@ -32,18 +46,7 @@ const Repairs: React.FC = () => {
 
     return (
         <>
-            <nav className="menu">
-                <ul>
-                    <li><a href="/">Strona główna</a></li>
-                    <li><a href="/AddTicket">Dodaj zgłoszenie</a></li>
-                    <li><a href="/Repairs">Naprawy</a></li>
-                    <li><a href="/Clients">Klienci</a></li>
-                    <li><a href="/Vehicles">Pojazdy</a></li>
-                    <li><a href="/Mechanics">Mechanicy</a></li>
-                    <li><a href="/Dodaj pojazd">Dodaj pojazd</a></li>
-                    <li><a href="/Logout">Wyloguj</a></li>
-                </ul>
-            </nav>
+            <Menu></Menu>
             <div className="lista_napraw" id="lista_napraw">
                 <h2>Naprawy:</h2>
                 {getRequestError ? (
@@ -55,6 +58,7 @@ const Repairs: React.FC = () => {
                             <th>ID</th>
                             <th>Telefon klienta</th>
                             <th>Mechanik</th>
+                            <th>Vin pojazdu</th>
                             <th>Protokół</th>
                             <th>Stan</th>
                             <th>Opis</th>
@@ -67,8 +71,8 @@ const Repairs: React.FC = () => {
                             <tr key={repair.repairId}>
                                 <td>{repair.repairId}</td>
                                 <td>{repair.phoneNumber}</td>
-                                <td>{repair.phoneNumber}</td>
-                                {/*<td>{repair.mechanic.username}</td>*/}
+                                <td>{formatUsername(repair.mechanic)}</td>
+                                <td>{repair.car.vin}</td>
                                 <td>{repair.repairProtocol}</td>
                                 <td>{repair.state}</td>
                                 <td>{repair.description}</td>

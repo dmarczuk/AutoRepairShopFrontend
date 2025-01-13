@@ -1,54 +1,47 @@
 import React, { useState } from 'react';
 import {useApi} from "../../composables/useApi";
-import { Client } from '../../models/models';
+import { RepairMechanicDto } from '../../models/models';
+import {Menu} from "../../components/Menu";
 
 const AcceptationRepair: React.FC = () => {
-    const { sendClient, postRequestError } = useApi();
-    const [client, setClient] = useState<Client>({
-        id: 0,
-        firstName: '',
-        secondName: '',
-        phoneNumber: '',
-        email: '',
+    const { sendAcceptRepair, postRequestError } = useApi();
+    const [ticketDto, setTicketDto] = useState<RepairMechanicDto>({
+        repairId: 0,
+        mechanicUsername: '',
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setClient((prevClient) => ({
-            ...prevClient,
-            [name]: value,
+        const { id, value } = e.target;
+        setTicketDto((prevTicket) => ({
+            ...prevTicket,
+            [id]: value,
         }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await sendClient(client);
+        await sendAcceptRepair(ticketDto);
     };
 
+
     return (
-        <div>
-            <h2>Add Client</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    First Name:
-                    <input type="text" name="firstName" value={client.firstName} onChange={handleChange} />
-                </label>
-                <label>
-                    Second Name:
-                    <input type="text" name="secondName" value={client.secondName} onChange={handleChange} />
-                </label>
-                <label>
-                    Phone Number:
-                    <input type="text" name="phoneNumber" value={client.phoneNumber} onChange={handleChange} />
-                </label>
-                <label>
-                    Email:
-                    <input type="email" name="email" value={client.email} onChange={handleChange} />
-                </label>
-                <button type="submit">Add Client</button>
-            </form>
-            {postRequestError && <p>Error submitting client. Please try again.</p>}
-        </div>
+        <>
+            <Menu></Menu>
+            <div>
+            <div className="formularz">
+                    <h2>Przyjęcie naprawy</h2>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="repairId">Id naprawy:</label>
+                        <input type="text" id="repairId" value={ticketDto.repairId} onChange={handleChange}/>
+                        <label htmlFor="mechanicUsername">Login mechanika:</label>
+                        <input type="text" id="mechanicUsername" value={ticketDto.mechanicUsername} onChange={handleChange}/>
+                        <button type="submit">Przyjmij naprawę</button>
+                        {/*<Button type="submit" onClick={() => sendNumbers({ inputNumbers: inputs })}*/}
+                    </form>
+                    {postRequestError && <p>Error submitting client. Please try again.</p>}
+                </div>
+            </div>
+        </>
     );
 };
 
