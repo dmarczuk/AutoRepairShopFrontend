@@ -1,15 +1,17 @@
-import axios from '../axiosConfig';
-import { useEffect, useState } from 'react';
+import axios from '../services/axiosConfig';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {Client, Mechanic} from '../models/models';
+import {Car, CarClientDto, Client, Mechanic, RepairMechanicDto, TicketDto} from '../models/models';
 
- let ticket = {} as Client;
-// let listOfClients =
+let ticket = {} as Client;
+let ticket2 = {} as TicketDto
+let ticket3 = {} as RepairMechanicDto
 
 export const useApi = () => {
     const navigate = useNavigate();
     const [postRequestError, setPostRequestError] = useState(false);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
     // const [getRequestError, setGetRequestError] = useState(false);
    // const [ticket, setTicket] = useState<Client>({} as Client);
    //  const [listOfClients, setListOfClients] = useState<Client[]>([]); // React state for the client list
@@ -21,6 +23,7 @@ export const useApi = () => {
             console.log('Client added successfully:', response.data);
             ticket = response.data;
             setPostRequestError(false);
+            setSuccessMessage("Client added successfully");
             //navigate('/ticket');
         } catch (error) {
             console.error('Error adding client:', error);
@@ -29,58 +32,69 @@ export const useApi = () => {
         }
     };
 
-    // const getClients = async () => {
-    //     try {
-    //         const response = await axios.get(`/clients`);
-    //         setListOfClients((prevClients) => {
-    //             console.log('Previous clients:', prevClients);
-    //             console.log('New clients:', response.data);
-    //             return response.data;
-    //         });
-    //         setGetRequestError(false);
-    //         console.log("WORKING");
-    //         //navigate('/checkResults/results');
-    //     } catch (error) {
-    //         if (error) setGetRequestError(true);
-    //         else setGetRequestError(false);
-    //     }
-    // };
+    const sendMechanic = async (mechanic: Mechanic) => {
+        try {
+            const response = await axios.post('/add/mechanic', mechanic);
+            console.log('Mechanic added successfully:', response.data);
+            ticket = response.data;
+            setPostRequestError(false);
+            setSuccessMessage("Mechanic added successfully");
+        } catch (error) {
+            console.error('Error adding mechanic:', error);
+            if (error) setPostRequestError(true);
+            else setPostRequestError(false);
+        }
+    };
 
-    // const getMechanics = async () => {
-    //     try {
-    //         const response = await axios.get(`/mechanics`);
-    //         setListOfMechanics((prevMechanics) => {
-    //             console.log('Previous mechanic:', prevMechanics);
-    //             console.log('New mechanics:', response.data);
-    //             return response.data;
-    //         });
-    //         setGetRequestError(false);
-    //         console.log("WORKING");
-    //         //navigate('/checkResults/results');
-    //     } catch (error) {
-    //         if (error) setGetRequestError(true);
-    //         else setGetRequestError(false);
-    //     }
-    // };
+    const sendCarClientDto = async (carClientDto: CarClientDto) => {
+        try {
+            const response = await axios.post('/add/car', carClientDto);
+            console.log('Car added successfully:', response.data);
+            ticket = response.data;
+            setPostRequestError(false);
+            setSuccessMessage("Car added successfully");
+        } catch (error) {
+            console.error('Error adding car:', error);
+            if (error) setPostRequestError(true);
+            else setPostRequestError(false);
+        }
+    };
 
-    // Fetch the client list when the component loads
-    // useEffect(() => {
-    //     getClients();
-    // }, []);
+    const sendTicketDto = async (newTicket: TicketDto) => {
+        try {
+            const response = await axios.post('/add/new/ticket', newTicket);
+            console.log('Ticket added successfully:', response.data);
+            ticket2 = response.data;
+            setPostRequestError(false);
+            //navigate('/ticket');
+        } catch (error) {
+            console.error('Error adding client:', error);
+            if (error) setPostRequestError(true);
+            else setPostRequestError(false);
+        }
+    };
 
-    // useEffect(() => {
-    //     getMechanics();
-    // }, []);
-
+    const sendAcceptRepair = async (newTicket: RepairMechanicDto) => {
+        try {
+            const response = await axios.patch('/accept/repair', newTicket);
+            console.log('Repair accepted successfully:', response.data);
+            ticket3 = response.data;
+            setPostRequestError(false);
+            //navigate('/ticket');
+        } catch (error) {
+            console.error('Error adding client:', error);
+            if (error) setPostRequestError(true);
+            else setPostRequestError(false);
+        }
+    };
 
     return {
         sendClient,
-        // getClients,
-        // getMechanics,
+        sendTicketDto,
+        sendAcceptRepair,
+        sendMechanic,
+        sendCarClientDto,
         postRequestError,
-        // getRequestError,
-        // ticket,
-        // listOfClients,
-        // listOfMechanics
+        successMessage
     };
 };
