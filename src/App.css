@@ -147,6 +147,7 @@ button:hover {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-collapse: collapse;
 }
 
 table {
@@ -253,4 +254,102 @@ tr:hover {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
+}
+
+#modify {
+  width: 70%;
+}
+
+
+@media screen and (max-width: 768px) {
+  nav.menu ul {
+    flex-direction: column; /* Stack the menu items vertically */
+    align-items: center; /* Center the items */
+  }
+
+  nav.menu a {
+    font-size: 14px; /* Make text a little smaller */
+    padding: 10px 0;
+  }
+
+  button {
+    width: 100%; /* Make buttons take full width on smaller screens */
+    font-size: 16px;
+  }
+}
+
+/* For devices with a width of 480px or less (mobile phones) */
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 14px; /* Make font size smaller for mobile devices */
+  }
+
+  nav.menu {
+    padding: 5px;
+  }
+
+  nav.menu a {
+    font-size: 12px; /* Smaller text size for mobile */
+    padding: 8px 0;
+  }
+
+  button {
+    font-size: 14px; /* Smaller button text for mobile */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #tabela_klientów th {
+    display: none; /* Hide table headers */
+  }
+
+  #tabela_klientów {
+    font-size: 14px;
+  }
+
+  #tabela_klientów th,
+  #tabela_klientów td {
+    padding: 8px 10px;
+  }
+
+  #tabela_klientów td {
+    display: block;
+    text-align: left;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  #tabela_klientów td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    font-weight: bold;
+  }
+
+  /* Adjust buttons */
+  #tabela_klientów td button {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+/* For devices with a width of 480px or less (mobile phones) */
+@media screen and (max-width: 480px) {
+
+  #tabela_klientów {
+    font-size: 12px;
+  }
+
+  #tabela_klientów td {
+    padding: 6px 8px;
+  }
+
+  #tabela_klientów td input {
+    padding: 6px;
+  }
+
+  #tabela_klientów td button {
+    padding: 8px;
+    font-size: 14px;
+  }
 }
