@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
 
 export const Menu: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [role, setRole] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Check if the user is logged in by looking for a token in localStorage
@@ -17,7 +19,9 @@ export const Menu: React.FC = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('roles');
         setIsLoggedIn(false); // Update state to reflect logout
-        window.location.href = '/'; // Redirect to the login page
+        //window.location.href = '/'; // Redirect to the login page
+        console.log('Logged out and navigating to homepage');
+        navigate('/');
     };
 
     return (
