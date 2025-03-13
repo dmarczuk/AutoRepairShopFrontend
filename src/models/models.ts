@@ -37,7 +37,7 @@ export interface Mechanic {
 }
 
 export interface Repair {
-    repairId: string
+    repairId: number
     mechanic: Mechanic;
     car: Car;
     startDate: string;
