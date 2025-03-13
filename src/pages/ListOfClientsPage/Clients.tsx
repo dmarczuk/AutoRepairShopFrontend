@@ -12,6 +12,10 @@ const Clients: React.FC = () => {
     const [editingClientPhoneNumber, setEditingClientPhoneNumber] = useState<string | null>(null);
     const [editedClient, setEditedClient] = useState<Partial<Client>>({});
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
+
     const getClients = async () => {
         try {
             const response = await axios.get(`/clients`);
@@ -72,10 +76,21 @@ const Clients: React.FC = () => {
         setEditedClient({});
     };
 
+    // Filter clients by phone number if search term is entered
+    const filteredClients = searchTerm
+        ? listOfClients.filter(client => client.phoneNumber.includes(searchTerm))
+        : listOfClients;
+
+    // Pagination logic
+    const indexOfLastClient = currentPage * itemsPerPage;
+    const indexOfFirstClient = indexOfLastClient - itemsPerPage;
+    const currentClients = filteredClients.slice(indexOfFirstClient, indexOfLastClient);
+    const totalPages = Math.ceil(filteredClients.length / itemsPerPage);
+
     return (
         <>
             <Menu></Menu>
-            <div className="lista_klientów" id="lista_klientów">
+            <div className="lista" id="lista">
             <h2>Klienci:</h2>
             {getRequestError ? (
                 <p>Failed to fetch clients. Please try again later.</p>
@@ -92,7 +107,8 @@ const Clients: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {listOfClients.map((client) => (
+                    {currentClients.length > 0 ? (
+                        currentClients.map((client) => (
                         <tr key={client.phoneNumber}>
                             {editingClientPhoneNumber === client.phoneNumber ? (
                                 <>
@@ -141,10 +157,37 @@ const Clients: React.FC = () => {
                                 </>
                             )}
                         </tr>
-                    ))}
+                    ))
+                    ) : (
+                        <tr>
+                            <td>Brak wyników</td>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
+
             )}
+
+                {/* Pagination Controls */}
+                {filteredClients.length > 0 && (
+                    <div>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Poprzednia
+                        </button>
+
+                        <span> Strona {currentPage} z {totalPages} </span>
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Następna
+                        </button>
+                    </div>
+                )}
             </div>
         </>
     );

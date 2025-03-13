@@ -103,7 +103,7 @@ const Mechanics: React.FC = () => {
     return (
         <>
             <Menu></Menu>
-            <div className="lista_mechaników" id="lista_mechaników">
+            <div className="lista" id="lista">
             <h2>Mechanicy:</h2>
             {getRequestError ? (
                 <p>Failed to fetch mechanics. Please try again later.</p>
