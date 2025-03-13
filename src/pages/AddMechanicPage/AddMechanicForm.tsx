@@ -42,11 +42,11 @@ const AddMechanicForm: React.FC = () => {
                     <input type="text" id="username" value={mechanic.username} onChange={handleChange}/>
                     <label htmlFor="password">Hasło:</label>
                     <input type="password" id="password" value={mechanic.password} onChange={handleChange}/>
-                    <button type="submit">Add Client</button>
+                    <button type="submit">Add Mechanic</button>
                 </form>
                 {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
                 {postRequestError && (
-                    <p style={{ color: 'red' }}>Error adding client. Please try again.</p>
+                    <p style={{ color: 'red' }}>Error adding mechanic. Please try again.</p>
                 )}
             </div>
         </>
