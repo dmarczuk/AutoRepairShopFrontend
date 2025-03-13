@@ -1,43 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {Menu} from "../../components/Menu";
 
 const MechanicPage: React.FC = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        // Check if the user is logged in by looking for a token in localStorage
+        const token = localStorage.getItem('token');
+        setIsLoggedIn(!!token); // Convert token existence to a boolean
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('roles');
+        setIsLoggedIn(false); // Update state to reflect logout
+        window.location.href = '/'; // Redirect to the login page
+    };
+
     return (
         <>
-            <nav className="menu">
-                <ul>
-                    <li><a href="/HomePage">Strona główna</a></li>
-                    <li><a href="/AddTicket">Dodaj zgłoszenie</a></li>
-                    <li><a href="/Repairs">Naprawy</a></li>
-                    <li><a href="/Clients">Klienci</a></li>
-                    <li><a href="/Vehicles">Pojazdy</a></li>
-                    <li><a href="/Logout">Wyloguj</a></li>
-                </ul>
-            </nav>
-            <div className="formularz">
-                <h2>Mechanic Page</h2>
-                <form>
-                    <h3>Dane klienta:</h3>
-                    <label htmlFor="imie">Imię:</label>
-                    <input type="text" id="imie"/>
-                    <label htmlFor="nazwisko">Nazwisko:</label>
-                    <input type="text" id="nazwisko"/>
-                    <label htmlFor="telefon">Telefon:</label>
-                    <input type="text" id="telefon"/>
-                    <label htmlFor="email">Email:</label>
-                    <input type="text" id="email"/>
-                    <h3>Dane pojazdu:</h3>
-                    <label htmlFor="rejestracja">Rejestracja:</label>
-                    <input type="text" id="rejestracja"/>
-                    <label htmlFor="marka">Marka:</label>
-                    <input type="text" id="marka"/>
-                    <label htmlFor="model">Model:</label>
-                    <input type="text" id="model"/>
-                    <label htmlFor="rocznik">Rocznik:</label>
-                    <input type="text" id="rocznik"/>
-                    <label htmlFor="vin">VIN:</label>
-                    <input type="text" id="vin"/>
-                    <button type="submit">Dodaj zgłoszenie</button>
-                </form>
+            <Menu></Menu>
+            <div className="main">
+                <h2>Strona Mechanika</h2>
             </div>
         </>
 

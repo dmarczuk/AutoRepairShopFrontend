@@ -7,7 +7,7 @@ export interface ThemeType {
 }
 
 export interface Client {
-    id: number;
+    clientId: number;
     firstName: string;
     secondName: string;
     phoneNumber: string;
@@ -22,19 +22,58 @@ export interface Car {
     vin: string
 }
 
+export interface CarClientDto {
+    car: Car;
+    phoneNumber: string
+}
+
 export interface Mechanic {
-    vehicleRegistration: string;
-    mark: string;
-    ifEmployed: boolean;
-    login: string;
+    mechanicId: number;
+    firstName: string;
+    secondName: string;
+    ifEmployed: string;
+    username: string;
     password: string
 }
 
 export interface Repair {
-    startDate: Date;
-    endDate: Date;
+    repairId: string
+    mechanic: Mechanic;
+    car: Car;
+    startDate: string;
+    endDate: string;
     state: string;
     description: string;
     repairProtocol: string;
+    phoneNumber: string;
 
 }
+
+export interface TicketDto {
+    client: Client;
+    car: Car;
+}
+
+export interface RepairMechanicDto {
+    repairId: number;
+    mechanicUsername: string;
+}
+
+export interface LoginRequest {
+    username: string;
+    password: string
+}
+
+export const formatDate = (dateString: string | null | undefined): string => {
+    if (!dateString) {
+        return ""; // Return an empty string if the input is null or undefined
+    }
+    return dateString.slice(0, 10); // Extract YYYY-MM-DD
+};
+
+export const formatUsername = (mechanic: Mechanic | null | undefined): string => {
+    if (!mechanic) {
+        return ""; // Return an empty string if the input is null or undefined
+    }
+    return mechanic.username; // Extract YYYY-MM-DD
+};
