@@ -31,16 +31,16 @@ const AddMechanicForm: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="formularz">
-                <h2>Dodanie mechanika</h2>
+                <h2>Add mechanic</h2>
                 <form onSubmit={handleSubmit}>
-                    <h3>Dane mechanika:</h3>
-                    <label htmlFor="firstName">Imię:</label>
+                    <h3>Mechanic data:</h3>
+                    <label htmlFor="firstName">FirstName:</label>
                     <input type="text" id="firstName" value={mechanic.firstName} onChange={handleChange}/>
-                    <label htmlFor="secondName">Nazwisko:</label>
+                    <label htmlFor="secondName">LastName:</label>
                     <input type="text" id="secondName" value={mechanic.secondName} onChange={handleChange}/>
                     <label htmlFor="login">Username:</label>
                     <input type="text" id="username" value={mechanic.username} onChange={handleChange}/>
-                    <label htmlFor="password">Hasło:</label>
+                    <label htmlFor="password">password:</label>
                     <input type="password" id="password" value={mechanic.password} onChange={handleChange}/>
                     <button type="submit">Add Mechanic</button>
                 </form>

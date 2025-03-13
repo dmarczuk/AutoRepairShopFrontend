@@ -29,13 +29,13 @@ const AcceptationRepair: React.FC = () => {
             <Menu></Menu>
             <div>
             <div className="formularz">
-                    <h2>Przyjęcie naprawy</h2>
+                    <h2>Accept ticket</h2>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="repairId">Id naprawy:</label>
+                        <label htmlFor="repairId">Repair ID:</label>
                         <input type="text" id="repairId" value={ticketDto.repairId} onChange={handleChange}/>
-                        <label htmlFor="mechanicUsername">Login mechanika:</label>
+                        <label htmlFor="mechanicUsername">Mechanic username:</label>
                         <input type="text" id="mechanicUsername" value={ticketDto.mechanicUsername} onChange={handleChange}/>
-                        <button type="submit">Przyjmij naprawę</button>
+                        <button type="submit">Accept ticket</button>
                         {/*<Button type="submit" onClick={() => sendNumbers({ inputNumbers: inputs })}*/}
                     </form>
                     {postRequestError && <p>Error submitting client. Please try again.</p>}

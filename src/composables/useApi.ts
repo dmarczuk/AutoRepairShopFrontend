@@ -1,6 +1,6 @@
 import axios from '../services/axiosConfig';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 
 import {Car, CarClientDto, Client, Mechanic, RepairMechanicDto, TicketDto} from '../models/models';
 
@@ -9,13 +9,9 @@ let ticket2 = {} as TicketDto
 let ticket3 = {} as RepairMechanicDto
 
 export const useApi = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [postRequestError, setPostRequestError] = useState(false);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
-    // const [getRequestError, setGetRequestError] = useState(false);
-   // const [ticket, setTicket] = useState<Client>({} as Client);
-   //  const [listOfClients, setListOfClients] = useState<Client[]>([]); // React state for the client list
-   //  const [listOfMechanics, setListOfMechanics] = useState<Mechanic[]>([]); // React state for the client list
 
     const sendClient = async (client: Client) => {
         try {

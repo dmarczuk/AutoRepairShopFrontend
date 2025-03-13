@@ -104,7 +104,7 @@ const Repairs: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="lista" id="listaNapraw">
-                <h2>Naprawy:</h2>
+                <h2>Repairs:</h2>
                 {getRequestError ? (
                     <p>Failed to fetch repairs. Please try again later.</p>
                 ) : (
@@ -112,15 +112,15 @@ const Repairs: React.FC = () => {
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Telefon klienta</th>
-                            <th>Mechanik</th>
-                            <th>Vin pojazdu</th>
-                            <th>Protokół</th>
-                            <th>Stan</th>
-                            <th>Opis</th>
-                            <th>Data rozpoczęcia</th>
-                            <th>Data zakończenia</th>
-                            <th id="actionRepair">Akcje</th>
+                            <th>Client phone number</th>
+                            <th>Mechanic</th>
+                            <th>Vin</th>
+                            <th>Protocol</th>
+                            <th>State</th>
+                            <th>Description</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th id="actionRepair">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -174,8 +174,8 @@ const Repairs: React.FC = () => {
                                             />
                                         </td>
                                         <td>
-                                            <button onClick={handleSaveClick}>Zapisz</button>
-                                            <button onClick={handleCancelClick}>Anuluj</button>
+                                            <button onClick={handleSaveClick}>Save</button>
+                                            <button onClick={handleCancelClick}>Cancel</button>
                                         </td>
                                     </>
                                 ) : (
@@ -190,7 +190,7 @@ const Repairs: React.FC = () => {
                                         <td>{formatDate(repair.startDate)}</td>
                                         <td>{formatDate(repair.endDate)}</td>
                                         <td>
-                                            <button id="modifyRepair" onClick={() => handleEditClick(repair)}>Modyfikuj</button>
+                                            <button id="modifyRepair" onClick={() => handleEditClick(repair)}>Modify</button>
                                         </td>
                                     </>
                                 )}
@@ -198,7 +198,7 @@ const Repairs: React.FC = () => {
                         ))
                         ) : (
                         <tr>
-                            <td>Brak wyników</td>
+                            <td>No data</td>
                         </tr>
                         )}
                         </tbody>
@@ -211,16 +211,16 @@ const Repairs: React.FC = () => {
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
                         >
-                            Poprzednia
+                            Previous
                         </button>
 
-                        <span> Strona {currentPage} z {totalPages} </span>
+                        <span> Page {currentPage} of {totalPages} </span>
 
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
                         >
-                            Następna
+                            Next
                         </button>
                     </div>
                 )}

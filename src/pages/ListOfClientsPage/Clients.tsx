@@ -91,7 +91,7 @@ const Clients: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="lista" id="lista">
-                <h2>Klienci:</h2>
+                <h2>Clients:</h2>
                 <input
                     type="text"
                     placeholder="Search by phone..."
@@ -105,11 +105,11 @@ const Clients: React.FC = () => {
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Imię</th>
-                            <th>Nazwisko</th>
-                            <th>Telefon</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Phone number</th>
                             <th>Email</th>
-                            <th>Akcje</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -146,8 +146,8 @@ const Clients: React.FC = () => {
                                                 />
                                             </td>
                                             <td>
-                                                <button onClick={handleSaveClick}>Zapisz</button>
-                                                <button onClick={handleCancelClick}>Anuluj</button>
+                                                <button onClick={handleSaveClick}>Save</button>
+                                                <button onClick={handleCancelClick}>Cancel</button>
                                             </td>
                                         </>
                                     ) : (
@@ -158,7 +158,7 @@ const Clients: React.FC = () => {
                                             <td>{client.phoneNumber}</td>
                                             <td>{client.email}</td>
                                             <td>
-                                                <button id="modify" onClick={() => handleEditClick(client)}>Modyfikuj
+                                                <button id="modify" onClick={() => handleEditClick(client)}>Modify
                                                 </button>
                                             </td>
                                         </>
@@ -167,7 +167,7 @@ const Clients: React.FC = () => {
                             ))
                         ) : (
                             <tr>
-                                <td>Brak wyników</td>
+                                <td>No result</td>
                             </tr>
                         )}
                         </tbody>
@@ -182,16 +182,16 @@ const Clients: React.FC = () => {
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
                         >
-                            Poprzednia
+                            Previous
                         </button>
 
-                        <span> Strona {currentPage} z {totalPages} </span>
+                        <span> Page {currentPage} of {totalPages} </span>
 
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
                         >
-                            Następna
+                            Next
                         </button>
                     </div>
                 )}

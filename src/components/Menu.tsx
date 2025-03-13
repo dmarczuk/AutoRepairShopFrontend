@@ -28,39 +28,39 @@ export const Menu: React.FC = () => {
     <nav className="menu">
         <ul>
             {isLoggedIn && role === 'ROLE_USER' && (
-                <li><a href="/UserPage">Strona użytkownika</a></li>
+                <li><a href="/UserPage">User page</a></li>
             )}
-            <li><a href="/">Strona główna</a></li>
-            <li><a href="/AddTicket">Dodaj zgłoszenie</a></li>
+            <li><a href="/">Main page</a></li>
+            <li><a href="/AddTicket">Add ticket</a></li>
             {isLoggedIn && (role === 'ROLE_ADMIN' || role === 'ROLE_MECHANIC') && (
-                <li><a href="/Repairs">Naprawy</a></li>
+                <li><a href="/Repairs">Repairs</a></li>
             )}
-            <li><a href="/MechanicPage">Strona mechanika</a></li>
+            <li><a href="/MechanicPage">Mechanic page</a></li>
             {isLoggedIn && (role === 'ROLE_ADMIN' || role === 'ROLE_MECHANIC') && (
-                <li><a href="/AcceptRepair">Przyjmij naprawę</a></li>
+                <li><a href="/AcceptRepair">Accept ticket</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN') && (
-                <li><a href="/Clients">Klienci</a></li>
+                <li><a href="/Clients">Clients</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN' || role === 'ROLE_MECHANIC') && (
-                <li><a href="/Cars">Pojazdy</a></li>
+                <li><a href="/Cars">Cars</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN') && (
-                <li><a href="/Mechanics">Mechanicy</a></li>
+                <li><a href="/Mechanics">Mechanics</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN') && (
-                <li><a href="/AddVehicle">Dodaj pojazd</a></li>
+                <li><a href="/AddVehicle">Add car</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN' || role === 'ROLE_MECHANIC') && (
-                <li><a href="/AddClient">Dodaj klienta</a></li>
+                <li><a href="/AddClient">Add client</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN') && (
-                <li><a href="/AddMechanic">Dodaj mechanika</a></li>
+                <li><a href="/AddMechanic">Add mechanic</a></li>
             )}
             {isLoggedIn ? (
-                <li><a href="/" onClick={handleLogout}>Wyloguj</a></li>
+                <li><a href="/" onClick={handleLogout}>Log out</a></li>
             ) : (
-                <li><a href="/Login">Zaloguj</a></li>
+                <li><a href="/Login">Log in</a></li>
             )}
         </ul>
     </nav>

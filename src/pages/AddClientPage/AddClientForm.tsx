@@ -45,14 +45,14 @@ const AddClientForm: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="formularz">
-                <h2>Dodanie klienta</h2>
+                <h2>Add Client</h2>
                 <form onSubmit={handleSubmit}>
-                    <h3>Dane klienta:</h3>
-                    <label htmlFor="firstName">Imię:</label>
+                    <h3>Client data:</h3>
+                    <label htmlFor="firstName">FirstName:</label>
                     <input type="text" id="firstName" value={client.firstName} onChange={handleChange}/>
-                    <label htmlFor="secondName">Nazwisko:</label>
+                    <label htmlFor="secondName">LastName:</label>
                     <input type="text" id="secondName" value={client.secondName} onChange={handleChange}/>
-                    <label htmlFor="phoneNumber">Numer telefonu:</label>
+                    <label htmlFor="phoneNumber">Phone number:</label>
                     <input type="text" id="phoneNumber" value={client.phoneNumber} onChange={handleChange}/>
                     <label htmlFor="email">Email:</label>
                     <input type="text" id="email" value={client.email} onChange={handleChange}/>

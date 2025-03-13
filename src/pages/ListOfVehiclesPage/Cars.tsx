@@ -81,7 +81,7 @@ const Cars: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="lista" id="lista">
-                <h2>Pojazdy:</h2>
+                <h2>Cars:</h2>
                 {getRequestError ? (
                     <p>Failed to fetch cars. Please try again later.</p>
                 ) : (
@@ -136,8 +136,8 @@ const Cars: React.FC = () => {
                                             />
                                         </td>
                                         <td>
-                                            <button onClick={handleSaveClick}>Zapisz</button>
-                                            <button onClick={handleCancelClick}>Anuluj</button>
+                                            <button onClick={handleSaveClick}>Save</button>
+                                            <button onClick={handleCancelClick}>Cancel</button>
                                         </td>
                                     </>
                                 ) : (
@@ -148,7 +148,7 @@ const Cars: React.FC = () => {
                                         <td>{car.model}</td>
                                         <td>{Number(car.productionYear)}</td>
                                         <td>
-                                            <button id="modify" onClick={() => handleEditClick(car)}>Modyfikuj</button>
+                                            <button id="modify" onClick={() => handleEditClick(car)}>Modify</button>
                                         </td>
                                     </>
                                 )}
@@ -156,7 +156,7 @@ const Cars: React.FC = () => {
                         ))
                         ) : (
                             <tr>
-                                <td>Brak wyników</td>
+                                <td>No data</td>
                             </tr>
                         )}
                         </tbody>
@@ -168,16 +168,16 @@ const Cars: React.FC = () => {
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
                         >
-                            Poprzednia
+                            Previous
                         </button>
 
-                        <span> Strona {currentPage} z {totalPages} </span>
+                        <span> Page {currentPage} of {totalPages} </span>
 
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
                         >
-                            Następna
+                            Next
                         </button>
                     </div>
                 )}
