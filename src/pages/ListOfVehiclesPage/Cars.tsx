@@ -9,17 +9,18 @@ const Cars: React.FC = () => {
     const [editingCarVin, setEditingCarVin] = useState<string | null>(null);
     const [editedCar, setEditedCar] = useState<Partial<Car>>({});
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
+
 
     const getCars = async () => {
         try {
             const response = await axios.get(`/cars`);
             setListOfCars((prevCars) => {
-                console.log('Previous cars:', prevCars);
-                console.log('New cars:', response.data);
                 return response.data;
             });
             setGetRequestError(false);
-            console.log("WORKING");
             //navigate('/checkResults/results');
         } catch (error) {
             if (error) setGetRequestError(true);
@@ -46,18 +47,13 @@ const Cars: React.FC = () => {
 
     const handleSaveClick = async () => {
         try {
-            // Optionally, send the updated client to the backend
             await axios.patch(`/modify/car`, editedCar);
-            //await axios.put(`/clients/${editingClientId}`, editedClient);
-
-            // Update the client in the local state
             setListOfCars((prevCar) =>
                 prevCar.map((car) =>
                     car.vin === editingCarVin ? { ...car, ...editedCar } : car
                 )
             );
 
-            // Clear editing state
             setEditingCarVin(null);
             setEditedCar({});
         } catch (error) {
@@ -66,9 +62,19 @@ const Cars: React.FC = () => {
     };
 
     const handleCancelClick = () => {
-        setEditingCarVin(null); // Exit editing mode without saving
+        setEditingCarVin(null);
         setEditedCar({});
     };
+
+    const filteredCars = searchTerm
+        ? listOfCars.filter(car => car.vin.startsWith(searchTerm))
+        : listOfCars;
+
+    // Pagination logic
+    const indexOfLastCar = currentPage * itemsPerPage;
+    const indexOfFirstCar = indexOfLastCar - itemsPerPage;
+    const currentCars = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
+    const totalPages = Math.ceil(filteredCars.length / itemsPerPage);
 
 
     return (
@@ -91,7 +97,8 @@ const Cars: React.FC = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {listOfCars.map((car) => (
+                        {currentCars.length > 0 ? (
+                            currentCars.map((car) => (
                             <tr key={car.vin}>
                                 {editingCarVin === car.vin ? (
                                     <>
@@ -146,9 +153,33 @@ const Cars: React.FC = () => {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        ))
+                        ) : (
+                            <tr>
+                                <td>Brak wyników</td>
+                            </tr>
+                        )}
                         </tbody>
                     </table>
+                )}
+                {filteredCars.length > 0 && (
+                    <div>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Poprzednia
+                        </button>
+
+                        <span> Strona {currentPage} z {totalPages} </span>
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Następna
+                        </button>
+                    </div>
                 )}
             </div>
         </>

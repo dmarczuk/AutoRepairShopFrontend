@@ -11,6 +11,9 @@ const Mechanics: React.FC = () => {
     const [editingMechanicUsername, setEditingMechanicUsername] = useState<string | null>(null);
     const [editedMechanic, setEditedMechanic] = useState<Partial<Mechanic>>({});
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
 
     useEffect(() => {
         // Check if the user is logged in by looking for a token in localStorage
@@ -99,6 +102,16 @@ const Mechanics: React.FC = () => {
     //     setIfEmployed((prevStatus) => !prevStatus); // Toggle the employment status
     // };
 
+    const filteredMechanics = searchTerm
+        ? listOfMechanics.filter(mechanic => mechanic.username.startsWith(searchTerm))
+        : listOfMechanics;
+
+    // Pagination logic
+    const indexOfLastMechanic = currentPage * itemsPerPage;
+    const indexOfFirstMechanic = indexOfLastMechanic - itemsPerPage;
+    const currentMechanic = filteredMechanics.slice(indexOfFirstMechanic, indexOfLastMechanic);
+    const totalPages = Math.ceil(filteredMechanics.length / itemsPerPage);
+
 
     return (
         <>
@@ -120,7 +133,8 @@ const Mechanics: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {listOfMechanics.map((mechanic) => (
+                    {currentMechanic.length > 0 ? (
+                        currentMechanic.map((mechanic) => (
                         <tr key={mechanic.username}>
                     {editingMechanicUsername === mechanic.username ? (
                         <>
@@ -147,9 +161,33 @@ const Mechanics: React.FC = () => {
                         </>
                     )}
                     </tr>
-                    ))}
+                    ))
+                    ) : (
+                        <tr>
+                            <td>Brak wyników</td>
+                        </tr>
+                    )}
                 </tbody>
                 </table>
+                )}
+                {filteredMechanics.length > 0 && (
+                    <div>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Poprzednia
+                        </button>
+
+                        <span> Strona {currentPage} z {totalPages} </span>
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Następna
+                        </button>
+                    </div>
                 )}
             </div>
         </>

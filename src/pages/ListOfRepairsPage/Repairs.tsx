@@ -11,6 +11,11 @@ const Repairs: React.FC = () => {
     const [editingRepairId, setEditingRepairId] = useState<number | null>(null);
     const [editedRepair, setEditedRepair] = useState<Partial<Repair>>({});
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
+
+
     useEffect(() => {
         // Check if the user is logged in by looking for a token in localStorage
         const token = localStorage.getItem('token');
@@ -81,9 +86,19 @@ const Repairs: React.FC = () => {
     };
 
     const handleCancelClick = () => {
-        setEditingRepairId(null); // Exit editing mode without saving
+        setEditingRepairId(null);
         setEditedRepair({});
     };
+
+    const filteredRepairs = searchTerm
+        ? listOfRepairs.filter(repair => repair.car.vin.startsWith(searchTerm))
+        : listOfRepairs;
+
+    // Pagination logic
+    const indexOfLastRepair = currentPage * itemsPerPage;
+    const indexOfFirstRepair = indexOfLastRepair - itemsPerPage;
+    const currentRepairs = filteredRepairs.slice(indexOfFirstRepair, indexOfLastRepair);
+    const totalPages = Math.ceil(filteredRepairs.length / itemsPerPage);
 
     return (
         <>
@@ -109,7 +124,8 @@ const Repairs: React.FC = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {listOfRepairs.map((repair) => (
+                        {currentRepairs.length > 0 ? (
+                            currentRepairs.map((repair) => (
                             <tr key={repair.repairId}>
                                 {editingRepairId === repair.repairId ? (
                                     <>
@@ -179,9 +195,34 @@ const Repairs: React.FC = () => {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        ))
+                        ) : (
+                        <tr>
+                            <td>Brak wyników</td>
+                        </tr>
+                        )}
                         </tbody>
                     </table>
+                )}
+
+                {filteredRepairs.length > 0 && (
+                    <div>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Poprzednia
+                        </button>
+
+                        <span> Strona {currentPage} z {totalPages} </span>
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Następna
+                        </button>
+                    </div>
                 )}
             </div>
         </>
