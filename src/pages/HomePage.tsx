@@ -7,9 +7,9 @@ const HomePage: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="main">
-                <h2>Strona Główna</h2>
-                <h2>Warsztat samochodowy. Zapraszamy!</h2>
-                <p>W zakładce Dodaj zgłoszenie możesz wysłać swoje zgłoszenie</p>
+                <h2>Main Page</h2>
+                <h2>CarShop. Welcome!</h2>
+                <p>In bookmark add ticket you can send your ticket</p>
             </div>
         </>
 

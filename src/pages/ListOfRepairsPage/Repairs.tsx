@@ -11,6 +11,11 @@ const Repairs: React.FC = () => {
     const [editingRepairId, setEditingRepairId] = useState<number | null>(null);
     const [editedRepair, setEditedRepair] = useState<Partial<Repair>>({});
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
+
+
     useEffect(() => {
         // Check if the user is logged in by looking for a token in localStorage
         const token = localStorage.getItem('token');
@@ -81,15 +86,25 @@ const Repairs: React.FC = () => {
     };
 
     const handleCancelClick = () => {
-        setEditingRepairId(null); // Exit editing mode without saving
+        setEditingRepairId(null);
         setEditedRepair({});
     };
+
+    const filteredRepairs = searchTerm
+        ? listOfRepairs.filter(repair => repair.car.vin.startsWith(searchTerm))
+        : listOfRepairs;
+
+    // Pagination logic
+    const indexOfLastRepair = currentPage * itemsPerPage;
+    const indexOfFirstRepair = indexOfLastRepair - itemsPerPage;
+    const currentRepairs = filteredRepairs.slice(indexOfFirstRepair, indexOfLastRepair);
+    const totalPages = Math.ceil(filteredRepairs.length / itemsPerPage);
 
     return (
         <>
             <Menu></Menu>
             <div className="lista" id="listaNapraw">
-                <h2>Naprawy:</h2>
+                <h2>Repairs:</h2>
                 {getRequestError ? (
                     <p>Failed to fetch repairs. Please try again later.</p>
                 ) : (
@@ -97,19 +112,20 @@ const Repairs: React.FC = () => {
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Telefon klienta</th>
-                            <th>Mechanik</th>
-                            <th>Vin pojazdu</th>
-                            <th>Protokół</th>
-                            <th>Stan</th>
-                            <th>Opis</th>
-                            <th>Data rozpoczęcia</th>
-                            <th>Data zakończenia</th>
-                            <th id="actionRepair">Akcje</th>
+                            <th>Client phone number</th>
+                            <th>Mechanic</th>
+                            <th>Vin</th>
+                            <th>Protocol</th>
+                            <th>State</th>
+                            <th>Description</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th id="actionRepair">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {listOfRepairs.map((repair) => (
+                        {currentRepairs.length > 0 ? (
+                            currentRepairs.map((repair) => (
                             <tr key={repair.repairId}>
                                 {editingRepairId === repair.repairId ? (
                                     <>
@@ -158,8 +174,8 @@ const Repairs: React.FC = () => {
                                             />
                                         </td>
                                         <td>
-                                            <button onClick={handleSaveClick}>Zapisz</button>
-                                            <button onClick={handleCancelClick}>Anuluj</button>
+                                            <button onClick={handleSaveClick}>Save</button>
+                                            <button onClick={handleCancelClick}>Cancel</button>
                                         </td>
                                     </>
                                 ) : (
@@ -174,14 +190,39 @@ const Repairs: React.FC = () => {
                                         <td>{formatDate(repair.startDate)}</td>
                                         <td>{formatDate(repair.endDate)}</td>
                                         <td>
-                                            <button id="modifyRepair" onClick={() => handleEditClick(repair)}>Modyfikuj</button>
+                                            <button id="modifyRepair" onClick={() => handleEditClick(repair)}>Modify</button>
                                         </td>
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        ))
+                        ) : (
+                        <tr>
+                            <td>No data</td>
+                        </tr>
+                        )}
                         </tbody>
                     </table>
+                )}
+
+                {filteredRepairs.length > 0 && (
+                    <div>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+
+                        <span> Page {currentPage} of {totalPages} </span>
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </div>
                 )}
             </div>
         </>

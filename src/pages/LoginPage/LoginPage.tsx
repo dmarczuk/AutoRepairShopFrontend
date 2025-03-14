@@ -53,7 +53,7 @@ const LoginForm: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="formularz">
-                <h2>Zaloguj się jako mechanik warsztatu</h2>
+                <h2>Log in as mechanic</h2>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="username">Login:</label>
                     <input type="text" id="username" value={loginRequest.username} onChange={handleChange}/>

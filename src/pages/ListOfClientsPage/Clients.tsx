@@ -5,8 +5,6 @@ import axios from "../../services/axiosConfig";
 import {Menu} from "../../components/Menu";
 
 const Clients: React.FC = () => {
-    //const [listOfClients, setListOfClients] = useState<Client[]>([]);
-   // const [getRequestError, setGetRequestError] = useState<boolean>(false);
     const [getRequestError, setGetRequestError] = useState(false);
     const [listOfClients, setListOfClients] = useState<Client[]>([]); // React state for the client list
     const [editingClientPhoneNumber, setEditingClientPhoneNumber] = useState<string | null>(null);
@@ -20,12 +18,9 @@ const Clients: React.FC = () => {
         try {
             const response = await axios.get(`/clients`);
             setListOfClients((prevClients) => {
-                //console.log('Previous clients:', prevClients);
-                //.log('New clients:', response.data);
                 return response.data.sort((a: Client, b: Client) => a.clientId - b.clientId);
             });
             setGetRequestError(false);
-            //console.log("WORKING");
             //navigate('/checkResults/results');
         } catch (error) {
             if (error) setGetRequestError(true);
@@ -76,9 +71,14 @@ const Clients: React.FC = () => {
         setEditedClient({});
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value.toLowerCase()); // Convert search input to lowercase
+        setCurrentPage(1); // Reset to first page on search
+    };
+
     // Filter clients by phone number if search term is entered
     const filteredClients = searchTerm
-        ? listOfClients.filter(client => client.phoneNumber.includes(searchTerm))
+        ? listOfClients.filter(client => client.phoneNumber.startsWith(searchTerm))
         : listOfClients;
 
     // Pagination logic
@@ -91,82 +91,89 @@ const Clients: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="lista" id="lista">
-            <h2>Klienci:</h2>
-            {getRequestError ? (
-                <p>Failed to fetch clients. Please try again later.</p>
-            ) : (
-                <table id="tabela_klientów">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Imię</th>
-                        <th>Nazwisko</th>
-                        <th>Telefon</th>
-                        <th>Email</th>
-                        <th>Akcje</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {currentClients.length > 0 ? (
-                        currentClients.map((client) => (
-                        <tr key={client.phoneNumber}>
-                            {editingClientPhoneNumber === client.phoneNumber ? (
-                                <>
-                                    <td>{client.clientId}</td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            name="firstName"
-                                            value={editedClient.firstName || ''}
-                                            onChange={handleInputChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            name="secondName"
-                                            value={editedClient.secondName || ''}
-                                            onChange={handleInputChange}
-                                        />
-                                    </td>
-                                    <td>{client.phoneNumber}</td>
-                                    {/* Phone number is not editable */}
-                                    <td>
-                                        <input
-                                            type="text"
-                                            name="email"
-                                            value={editedClient.email || ''}
-                                            onChange={handleInputChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <button onClick={handleSaveClick}>Zapisz</button>
-                                        <button onClick={handleCancelClick}>Anuluj</button>
-                                    </td>
-                                </>
-                            ) : (
-                                <>
-                                    <td>{client.clientId}</td>
-                                    <td>{client.firstName}</td>
-                                    <td>{client.secondName}</td>
-                                    <td>{client.phoneNumber}</td>
-                                    <td>{client.email}</td>
-                                    <td>
-                                        <button id="modify" onClick={() => handleEditClick(client)}>Modyfikuj</button>
-                                    </td>
-                                </>
-                            )}
-                        </tr>
-                    ))
-                    ) : (
+                <h2>Clients:</h2>
+                <input
+                    type="text"
+                    placeholder="Search by phone..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+                {getRequestError ? (
+                    <p>Failed to fetch clients. Please try again later.</p>
+                ) : (
+                    <table id="tabela_klientów">
+                        <thead>
                         <tr>
-                            <td>Brak wyników</td>
+                            <th>ID</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Phone number</th>
+                            <th>Email</th>
+                            <th>Actions</th>
                         </tr>
-                    )}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {currentClients.length > 0 ? (
+                            currentClients.map((client) => (
+                                <tr key={client.phoneNumber}>
+                                    {editingClientPhoneNumber === client.phoneNumber ? (
+                                        <>
+                                            <td>{client.clientId}</td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="firstName"
+                                                    value={editedClient.firstName || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="secondName"
+                                                    value={editedClient.secondName || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>{client.phoneNumber}</td>
+                                            {/* Phone number is not editable */}
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="email"
+                                                    value={editedClient.email || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <button onClick={handleSaveClick}>Save</button>
+                                                <button onClick={handleCancelClick}>Cancel</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>{client.clientId}</td>
+                                            <td>{client.firstName}</td>
+                                            <td>{client.secondName}</td>
+                                            <td>{client.phoneNumber}</td>
+                                            <td>{client.email}</td>
+                                            <td>
+                                                <button id="modify" onClick={() => handleEditClick(client)}>Modify
+                                                </button>
+                                            </td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td>No result</td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </table>
 
-            )}
+                )}
 
                 {/* Pagination Controls */}
                 {filteredClients.length > 0 && (
@@ -175,16 +182,16 @@ const Clients: React.FC = () => {
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
                         >
-                            Poprzednia
+                            Previous
                         </button>
 
-                        <span> Strona {currentPage} z {totalPages} </span>
+                        <span> Page {currentPage} of {totalPages} </span>
 
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
                         >
-                            Następna
+                            Next
                         </button>
                     </div>
                 )}

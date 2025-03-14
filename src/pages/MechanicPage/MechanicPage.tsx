@@ -21,7 +21,7 @@ const MechanicPage: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="main">
-                <h2>Strona Mechanika</h2>
+                <h2>Mechanic Page</h2>
             </div>
         </>
 

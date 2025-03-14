@@ -61,29 +61,29 @@ const AddTicket: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="formularz">
-            <h2>Dodanie zgłoszenia</h2>
+            <h2>Add ticket</h2>
             <form onSubmit={handleSubmit}>
-                <h3>Dane klienta:</h3>
-                <label htmlFor="firstName">Imię:</label>
+                <h3>Client data:</h3>
+                <label htmlFor="firstName">FirstName:</label>
                 <input type="text" id="firstName" value={ticket.client.firstName} onChange={handleChange}/>
-                <label htmlFor="secondName">Nazwisko:</label>
+                <label htmlFor="secondName">SecondName:</label>
                 <input type="text" id="secondName" value={ticket.client.secondName} onChange={handleChange}/>
-                <label htmlFor="phoneNumber">Numer telefonu:</label>
+                <label htmlFor="phoneNumber">Phone number:</label>
                 <input type="text" id="phoneNumber" value={ticket.client.phoneNumber} onChange={handleChange}/>
                 <label htmlFor="email">Email:</label>
                 <input type="text" id="email" value={ticket.client.email} onChange={handleChange}/>
                 <h3>Dane pojazdu:</h3>
-                <label htmlFor="rejestracja">Rejestracja:</label>
+                <label htmlFor="rejestracja">Car registration:</label>
                 <input type="text" id="vehicleRegistration" value={ticket.car.vehicleRegistration} onChange={handleChange}/>
-                <label htmlFor="marka">Marka:</label>
+                <label htmlFor="marka">Mark:</label>
                 <input type="text" id="mark" value={ticket.car.mark} onChange={handleChange}/>
                 <label htmlFor="model">Model:</label>
                 <input type="text" id="model" value={ticket.car.model} onChange={handleChange}/>
-                <label htmlFor="rocznik">Rocznik:</label>
+                <label htmlFor="rocznik">Production year:</label>
                 <input type="number" id="productionYear" value={ticket.car.productionYear} onChange={handleChange}/>
                 <label htmlFor="vin">VIN:</label>
                 <input type="text" id="vin" value={ticket.car.vin} onChange={handleChange}/>
-                <button type="submit">Dodaj zgloszenie</button>
+                <button type="submit">Add ticket</button>
             </form>
             {successMessage && <p style={{color: 'green'}}>{successMessage}</p>}
             {postRequestError && (

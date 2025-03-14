@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
 
 export const Menu: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [role, setRole] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Check if the user is logged in by looking for a token in localStorage
@@ -17,46 +19,48 @@ export const Menu: React.FC = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('roles');
         setIsLoggedIn(false); // Update state to reflect logout
-        window.location.href = '/'; // Redirect to the login page
+        //window.location.href = '/'; // Redirect to the login page
+        console.log('Logged out and navigating to homepage');
+        navigate('/');
     };
 
     return (
     <nav className="menu">
         <ul>
             {isLoggedIn && role === 'ROLE_USER' && (
-                <li><a href="/UserPage">Strona użytkownika</a></li>
+                <li><a href="/UserPage">User page</a></li>
             )}
-            <li><a href="/">Strona główna</a></li>
-            <li><a href="/AddTicket">Dodaj zgłoszenie</a></li>
+            <li><a href="/">Main page</a></li>
+            <li><a href="/AddTicket">Add ticket</a></li>
             {isLoggedIn && (role === 'ROLE_ADMIN' || role === 'ROLE_MECHANIC') && (
-                <li><a href="/Repairs">Naprawy</a></li>
+                <li><a href="/Repairs">Repairs</a></li>
             )}
-            <li><a href="/MechanicPage">Strona mechanika</a></li>
+            <li><a href="/MechanicPage">Mechanic page</a></li>
             {isLoggedIn && (role === 'ROLE_ADMIN' || role === 'ROLE_MECHANIC') && (
-                <li><a href="/AcceptRepair">Przyjmij naprawę</a></li>
+                <li><a href="/AcceptRepair">Accept ticket</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN') && (
-                <li><a href="/Clients">Klienci</a></li>
+                <li><a href="/Clients">Clients</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN' || role === 'ROLE_MECHANIC') && (
-                <li><a href="/Cars">Pojazdy</a></li>
+                <li><a href="/Cars">Cars</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN') && (
-                <li><a href="/Mechanics">Mechanicy</a></li>
+                <li><a href="/Mechanics">Mechanics</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN') && (
-                <li><a href="/AddVehicle">Dodaj pojazd</a></li>
+                <li><a href="/AddVehicle">Add car</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN' || role === 'ROLE_MECHANIC') && (
-                <li><a href="/AddClient">Dodaj klienta</a></li>
+                <li><a href="/AddClient">Add client</a></li>
             )}
             {isLoggedIn && (role === 'ROLE_ADMIN') && (
-                <li><a href="/AddMechanic">Dodaj mechanika</a></li>
+                <li><a href="/AddMechanic">Add mechanic</a></li>
             )}
             {isLoggedIn ? (
-                <li><a href="/" onClick={handleLogout}>Wyloguj</a></li>
+                <li><a href="/" onClick={handleLogout}>Log out</a></li>
             ) : (
-                <li><a href="/Login">Zaloguj</a></li>
+                <li><a href="/Login">Log in</a></li>
             )}
         </ul>
     </nav>

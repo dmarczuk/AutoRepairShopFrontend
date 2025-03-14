@@ -73,7 +73,7 @@ export const formatDate = (dateString: string | null | undefined): string => {
 
 export const formatUsername = (mechanic: Mechanic | null | undefined): string => {
     if (!mechanic) {
-        return ""; // Return an empty string if the input is null or undefined
+        return "";
     }
-    return mechanic.username; // Extract YYYY-MM-DD
+    return mechanic.username;
 };

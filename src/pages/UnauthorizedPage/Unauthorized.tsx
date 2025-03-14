@@ -6,8 +6,8 @@ const Unauthorized: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="main">
-                <h2>Brak dostępu</h2>
-                <p>Musisz się zalogować, aby wyświetlić tą stronę</p>
+                <h2>Unauthorized</h2>
+                <p>I have to log in to display this page</p>
             </div>
         </>
     )
