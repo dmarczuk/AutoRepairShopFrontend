@@ -102,8 +102,14 @@ const Mechanics: React.FC = () => {
     //     setIfEmployed((prevStatus) => !prevStatus); // Toggle the employment status
     // };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value.toLowerCase());
+        setCurrentPage(1);
+    };
+
     const filteredMechanics = searchTerm
-        ? listOfMechanics.filter(mechanic => mechanic.username.startsWith(searchTerm))
+        ? listOfMechanics.filter(mechanic =>
+            mechanic.username.toLowerCase().startsWith(searchTerm))
         : listOfMechanics;
 
     // Pagination logic
@@ -117,76 +123,82 @@ const Mechanics: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="lista" id="lista">
-            <h2>Mechanics:</h2>
-            {getRequestError ? (
-                <p>Failed to fetch mechanics. Please try again later.</p>
-            ) : (
-                <table id="tabela_mechaników">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>FirstName</th>
-                        <th>LastName</th>
-                        <th>Username</th>
-                        <th>If employed</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {currentMechanic.length > 0 ? (
-                        currentMechanic.map((mechanic) => (
-                        <tr key={mechanic.username}>
-                    {editingMechanicUsername === mechanic.username ? (
-                        <>
-                            <td>{mechanic.mechanicId}</td>
-                            <td>{mechanic.firstName}</td>
-                            <td>{mechanic.secondName}</td>
-                            <td>{mechanic.username}</td>
-                            <td>{mechanic.ifEmployed}</td>
-                            <td>
-                                <button onClick={handleSaveClick}>Accept</button>
-                                <button onClick={handleCancelClick}>Cancel</button>
-                            </td>
-                        </>
-                    ) : (
-                        <>
-                            <td>{mechanic.mechanicId}</td>
-                            <td>{mechanic.firstName}</td>
-                            <td>{mechanic.secondName}</td>
-                            <td>{mechanic.username}</td>
-                            <td>{mechanic.ifEmployed}</td>
-                            <td>
-                                <button id="modify" onClick={() => handleEditClick(mechanic)}>{mechanic.ifEmployed === 'YES' ? 'Fire' : 'Hire'} {/* Show Zwolnij if employed, Zatrudnij if not */}</button>
-                            </td>
-                        </>
-                    )}
-                    </tr>
-                    ))
-                    ) : (
+                <h2>Mechanics:</h2>
+
+                <input
+                    type="text"
+                    placeholder="seach by mechanic username"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+                {getRequestError ? (
+                    <p>Failed to fetch mechanics. Please try again later.</p>
+                ) : (
+                    <table id="tabela_mechaników">
+                        <thead>
                         <tr>
-                            <td>No result</td>
+                            <th>ID</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Username</th>
+                            <th>If employed</th>
+                            <th>Actions</th>
                         </tr>
-                    )}
-                </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {currentMechanic.length > 0 ? (
+                            currentMechanic.map((mechanic) => (
+                                <tr key={mechanic.username}>
+                                    {editingMechanicUsername === mechanic.username ? (
+                                        <>
+                                            <td>{mechanic.mechanicId}</td>
+                                            <td>{mechanic.firstName}</td>
+                                            <td>{mechanic.secondName}</td>
+                                            <td>{mechanic.username}</td>
+                                            <td>{mechanic.ifEmployed}</td>
+                                            <td>
+                                                <button onClick={handleSaveClick}>Accept</button>
+                                                <button onClick={handleCancelClick}>Cancel</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>{mechanic.mechanicId}</td>
+                                            <td>{mechanic.firstName}</td>
+                                            <td>{mechanic.secondName}</td>
+                                            <td>{mechanic.username}</td>
+                                            <td>{mechanic.ifEmployed}</td>
+                                            <td>
+                                                <button id="modify"
+                                                        onClick={() => handleEditClick(mechanic)}>{mechanic.ifEmployed === 'YES' ? 'Fire' : 'Hire'} {/* Show Zwolnij if employed, Zatrudnij if not */}</button>
+                                            </td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td>No result</td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </table>
                 )}
                 {filteredMechanics.length > 0 && (
-                    <div>
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
+                    <div className="button-container">
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
                         >
                             Previous
                         </button>
-
-                        <span> Page {currentPage} of {totalPages} </span>
-
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
                         >
                             Next
                         </button>
+                        <span> Page {currentPage} of {totalPages} </span>
                     </div>
                 )}
             </div>

@@ -90,8 +90,14 @@ const Repairs: React.FC = () => {
         setEditedRepair({});
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value.toLowerCase());
+        setCurrentPage(1);
+    };
+
     const filteredRepairs = searchTerm
-        ? listOfRepairs.filter(repair => repair.car.vin.startsWith(searchTerm))
+        ? listOfRepairs.filter(repair =>
+            String(repair.car.vin).toLowerCase().startsWith(searchTerm))
         : listOfRepairs;
 
     // Pagination logic
@@ -105,6 +111,13 @@ const Repairs: React.FC = () => {
             <Menu></Menu>
             <div className="lista" id="listaNapraw">
                 <h2>Repairs:</h2>
+
+                <input
+                    type="text"
+                    placeholder="searching by VIN"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
                 {getRequestError ? (
                     <p>Failed to fetch repairs. Please try again later.</p>
                 ) : (
@@ -126,102 +139,102 @@ const Repairs: React.FC = () => {
                         <tbody>
                         {currentRepairs.length > 0 ? (
                             currentRepairs.map((repair) => (
-                            <tr key={repair.repairId}>
-                                {editingRepairId === repair.repairId ? (
-                                    <>
-                                        <td>{repair.repairId}</td>
-                                        <td>{repair.phoneNumber}</td>
-                                        <td>{formatUsername(repair.mechanic)}</td>
-                                        <td>{repair.car.vin}</td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="repairProtocol"
-                                                value={editedRepair.repairProtocol || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="state"
-                                                value={editedRepair.state || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="description"
-                                                value={editedRepair.description || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="startDate"
-                                                value={editedRepair.startDate || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="endDate"
-                                                value={editedRepair.endDate || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <button onClick={handleSaveClick}>Save</button>
-                                            <button onClick={handleCancelClick}>Cancel</button>
-                                        </td>
-                                    </>
-                                ) : (
-                                    <>
-                                        <td>{repair.repairId}</td>
-                                        <td>{repair.phoneNumber}</td>
-                                        <td>{formatUsername(repair.mechanic)}</td>
-                                        <td>{repair.car.vin}</td>
-                                        <td>{repair.repairProtocol}</td>
-                                        <td>{repair.state}</td>
-                                        <td>{repair.description}</td>
-                                        <td>{formatDate(repair.startDate)}</td>
-                                        <td>{formatDate(repair.endDate)}</td>
-                                        <td>
-                                            <button id="modifyRepair" onClick={() => handleEditClick(repair)}>Modify</button>
-                                        </td>
-                                    </>
-                                )}
-                            </tr>
-                        ))
+                                <tr key={repair.repairId}>
+                                    {editingRepairId === repair.repairId ? (
+                                        <>
+                                            <td>{repair.repairId}</td>
+                                            <td>{repair.phoneNumber}</td>
+                                            <td>{formatUsername(repair.mechanic)}</td>
+                                            <td>{repair.car.vin}</td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="repairProtocol"
+                                                    value={editedRepair.repairProtocol || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="state"
+                                                    value={editedRepair.state || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="description"
+                                                    value={editedRepair.description || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="startDate"
+                                                    value={editedRepair.startDate || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="endDate"
+                                                    value={editedRepair.endDate || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <button onClick={handleSaveClick}>Save</button>
+                                                <button onClick={handleCancelClick}>Cancel</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>{repair.repairId}</td>
+                                            <td>{repair.phoneNumber}</td>
+                                            <td>{formatUsername(repair.mechanic)}</td>
+                                            <td>{repair.car.vin}</td>
+                                            <td>{repair.repairProtocol}</td>
+                                            <td>{repair.state}</td>
+                                            <td>{repair.description}</td>
+                                            <td>{formatDate(repair.startDate)}</td>
+                                            <td>{formatDate(repair.endDate)}</td>
+                                            <td>
+                                                <button id="modifyRepair"
+                                                        onClick={() => handleEditClick(repair)}>Modify
+                                                </button>
+                                            </td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))
                         ) : (
-                        <tr>
-                            <td>No data</td>
-                        </tr>
+                            <tr>
+                                <td>No data</td>
+                            </tr>
                         )}
                         </tbody>
                     </table>
                 )}
 
                 {filteredRepairs.length > 0 && (
-                    <div>
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
+                    <div className="button-container">
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
                         >
                             Previous
                         </button>
-
-                        <span> Page {currentPage} of {totalPages} </span>
-
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
                         >
                             Next
                         </button>
+                        <span> Page {currentPage} of {totalPages} </span>
                     </div>
                 )}
             </div>
