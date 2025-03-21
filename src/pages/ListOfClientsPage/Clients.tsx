@@ -9,6 +9,7 @@ const Clients: React.FC = () => {
     const [listOfClients, setListOfClients] = useState<Client[]>([]); // React state for the client list
     const [editingClientPhoneNumber, setEditingClientPhoneNumber] = useState<string | null>(null);
     const [editedClient, setEditedClient] = useState<Partial<Client>>({});
+    const [pageInput, setPageInput] = useState("");
 
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -74,6 +75,14 @@ const Clients: React.FC = () => {
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value.toLowerCase()); // Convert search input to lowercase
         setCurrentPage(1); // Reset to first page on search
+    };
+
+    const handlePageChange = () => {
+        const pageNumber = parseInt(pageInput, 10);
+        if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= totalPages) {
+            setCurrentPage(pageNumber);
+        }
+        setPageInput(""); // Clear input after submission
     };
 
     // Filter clients by phone number if search term is entered
@@ -175,23 +184,33 @@ const Clients: React.FC = () => {
 
                 )}
 
-                {/* Pagination Controls */}
                 {filteredClients.length > 0 && (
-                    <div>
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
+                    <div className="button-container">
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
                         >
                             Previous
                         </button>
-
-                        <span> Page {currentPage} of {totalPages} </span>
-
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
                         >
                             Next
+                        </button>
+                        <span> Page {currentPage} of {totalPages} </span>
+
+                        <input
+                            type="number"
+                            className="search-page"
+                            value={pageInput}
+                            onChange={(e) => setPageInput(e.target.value)}
+                            placeholder="Go to..."
+                            min="1"
+                            max={totalPages}
+                        />
+                        <button className="button-go" onClick={handlePageChange}>
+                            Go
                         </button>
                     </div>
                 )}

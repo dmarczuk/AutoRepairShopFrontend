@@ -329,3 +329,50 @@ tr:hover {
     font-size: 14px;
   }
 }
+
+.button-container {
+  display: flex;
+  gap: 5px;
+  /*justify-content: center;*/
+  margin-top: 20px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.button-page {
+  background-color: #4a9ff1;
+  width: 120px;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button-page:first-child {
+  margin-left: auto; /* Pushes all buttons to the right */
+}
+
+.search-page {
+  width: 50px;
+  padding: 3px;
+  text-align: center;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /*margin-left: auto;*/
+}
+
+.button-go {
+  background-color: #4a9ff1;
+  width: 50px;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 5px;
+}
