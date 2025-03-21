@@ -10,6 +10,7 @@ const Cars: React.FC = () => {
     const [editedCar, setEditedCar] = useState<Partial<Car>>({});
 
     const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm2, setSearchTerm2] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
 
@@ -66,9 +67,22 @@ const Cars: React.FC = () => {
         setEditedCar({});
     };
 
-    const filteredCars = searchTerm
-        ? listOfCars.filter(car => car.vin.startsWith(searchTerm))
-        : listOfCars;
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value.toLowerCase());
+        setCurrentPage(1);
+    };
+
+    const handleSearchChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm2(e.target.value.toLowerCase());
+        setCurrentPage(1);
+    };
+
+
+    const filteredCars = listOfCars.filter(car => {
+        const a = car.vin.toLowerCase().startsWith(searchTerm);
+        const b =  car.vehicleRegistration.toLowerCase().startsWith(searchTerm2);
+        return a && b;
+    })
 
     // Pagination logic
     const indexOfLastCar = currentPage * itemsPerPage;
@@ -82,6 +96,19 @@ const Cars: React.FC = () => {
             <Menu></Menu>
             <div className="lista" id="lista">
                 <h2>Cars:</h2>
+                <input
+                    type="text"
+                    placeholder="seach by VIN"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+
+                <input
+                    type="text"
+                    placeholder="seach by vehicle registration"
+                    value={searchTerm2}
+                    onChange={handleSearchChange2}
+                />
                 {getRequestError ? (
                     <p>Failed to fetch cars. Please try again later.</p>
                 ) : (
@@ -99,61 +126,61 @@ const Cars: React.FC = () => {
                         <tbody>
                         {currentCars.length > 0 ? (
                             currentCars.map((car) => (
-                            <tr key={car.vin}>
-                                {editingCarVin === car.vin ? (
-                                    <>
-                                        <td>{car.vin}</td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="vehicleRegistration"
-                                                value={editedCar.vehicleRegistration || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="mark"
-                                                value={editedCar.mark || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="model"
-                                                value={editedCar.model || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="number"
-                                                name="productionYear"
-                                                value={editedCar.productionYear || ''}
-                                                onChange={handleInputChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <button onClick={handleSaveClick}>Save</button>
-                                            <button onClick={handleCancelClick}>Cancel</button>
-                                        </td>
-                                    </>
-                                ) : (
-                                    <>
-                                        <td>{car.vin}</td>
-                                        <td>{car.vehicleRegistration}</td>
-                                        <td>{car.mark}</td>
-                                        <td>{car.model}</td>
-                                        <td>{Number(car.productionYear)}</td>
-                                        <td>
-                                            <button id="modify" onClick={() => handleEditClick(car)}>Modify</button>
-                                        </td>
-                                    </>
-                                )}
-                            </tr>
-                        ))
+                                <tr key={car.vin}>
+                                    {editingCarVin === car.vin ? (
+                                        <>
+                                            <td>{car.vin}</td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="vehicleRegistration"
+                                                    value={editedCar.vehicleRegistration || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="mark"
+                                                    value={editedCar.mark || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="model"
+                                                    value={editedCar.model || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="number"
+                                                    name="productionYear"
+                                                    value={editedCar.productionYear || ''}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
+                                                <button onClick={handleSaveClick}>Save</button>
+                                                <button onClick={handleCancelClick}>Cancel</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>{car.vin}</td>
+                                            <td>{car.vehicleRegistration}</td>
+                                            <td>{car.mark}</td>
+                                            <td>{car.model}</td>
+                                            <td>{Number(car.productionYear)}</td>
+                                            <td>
+                                                <button id="modify" onClick={() => handleEditClick(car)}>Modify</button>
+                                            </td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))
                         ) : (
                             <tr>
                                 <td>No data</td>
@@ -163,22 +190,20 @@ const Cars: React.FC = () => {
                     </table>
                 )}
                 {filteredCars.length > 0 && (
-                    <div>
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
+                    <div className="button-container">
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
                         >
                             Previous
                         </button>
-
-                        <span> Page {currentPage} of {totalPages} </span>
-
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
+                        <button className="button-page"
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
                         >
                             Next
                         </button>
+                        <span> Page {currentPage} of {totalPages} </span>
                     </div>
                 )}
             </div>
